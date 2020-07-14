@@ -1,0 +1,60 @@
+<p-table [columns]="cols" [value]="smsData" selectionMode="single" [(selection)]="selectedCity" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+        List of City
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+        </div>
+    </ng-template>
+</p-table>
+
+<p-dialog header="City Details" [(visible)]="displayDialog" [focusOnShow]="false" showEffect="fade" [modal]="true" [style]="{width: '300px'}">
+    <div class="p-grid ui-fluid" *ngIf="City">
+        <div class="p-col-4">
+            <label for="city">City</label>
+        </div>
+        <div class="p-col-8">
+            <input pInputText id="city" [(ngModel)]="City.city" autofocus />
+        </div>
+        <div class="p-col-4">
+            <label for="start_date">Start Date</label>
+        </div>
+        <div class="p-col-8">
+            <input pInputText id="start_date" [(ngModel)]="City.start_date" />
+        </div>
+        <div class="p-col-4">
+            <label for="end_date">End Date</label>
+        </div>
+        <div class="p-col-8">
+            <input pInputText id="end_date" [(ngModel)]="City.end_date" />
+        </div>
+        <div class="p-col-4">
+            <label for="status">Status</label>
+        </div>
+        <div class="p-col-8">
+            <input pInputText id="status" [(ngModel)]="City.status" />
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+        </div>
+    </p-footer>
+</p-dialog>
